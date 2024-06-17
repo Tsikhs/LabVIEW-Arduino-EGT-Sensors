@@ -1,0 +1,45 @@
+#include <Thermocouple.h>
+#include <MAX6675_Thermocouple.h>
+
+#define SCK_PIN 6
+#define CS1_PIN 5
+#define CS2_PIN 7
+#define CS3_PIN 8
+#define CS4_PIN 9
+#define SO_PIN 4
+
+Thermocouple* thermocouple1;
+Thermocouple* thermocouple2;
+Thermocouple* thermocouple3;
+Thermocouple* thermocouple4;
+
+double egt1, egt2, egt3, egt4;
+
+void setup() {
+ Serial.begin(9600);
+ thermocouple1 = new MAX6675_Thermocouple(SCK_PIN, CS1_PIN, 
+SO_PIN);
+ thermocouple2 = new MAX6675_Thermocouple(SCK_PIN, CS2_PIN, 
+SO_PIN);
+ thermocouple3 = new MAX6675_Thermocouple(SCK_PIN, CS3_PIN, 
+SO_PIN);
+ thermocouple4 = new MAX6675_Thermocouple(SCK_PIN, CS4_PIN, 
+SO_PIN);
+}
+
+void loop() {
+ egt1 = thermocouple1->readCelsius();
+ egt2 = thermocouple2->readCelsius();
+ egt3 = thermocouple3->readCelsius();
+ egt4 = thermocouple4->readCelsius();
+ delay(100);
+
+ Serial.print(egt1);
+ Serial.print(",");
+ Serial.print(egt2);
+ Serial.print(",");
+ Serial.print(egt3);
+ Serial.print(",");
+ Serial.print(egt4);
+ Serial.print("\n");
+}
